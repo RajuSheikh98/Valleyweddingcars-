@@ -1,4 +1,19 @@
-<!DOCTYPE html>
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body {
+                  background-color: white; /* Ensure the iframe has a white background */
+                }
+    
+                
+              </style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -167,12 +182,17 @@
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        /* Segmented radio buttons (mobile-friendly) - FIXED WHITE BORDER ISSUE */
+        /* SEGMENTED CONTROL FIXES - REMOVING WHITE BORDERS */
         .segmented{
             display:flex;
             gap:8px;
             flex-wrap:wrap;
-            margin:8px 0 4px
+            margin:8px 0 4px;
+            /* REMOVE DEFAULT FIELDSET STYLING */
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
         }
         
         .seg-item{
@@ -188,9 +208,10 @@
             -webkit-tap-highlight-color:transparent;
             background: #1a1a1a;
             transition: all 0.2s ease;
-            /* Remove any white borders */
+            /* REMOVE ANY WHITE BORDER PROPERTIES */
             border-color: #d4af37 !important;
             box-shadow: none !important;
+            outline: none !important;
         }
         
         .seg-item input{ 
@@ -214,10 +235,19 @@
             transform: translateY(0.5px) 
         }
 
-        /* Fix focus styles to remove white borders */
+        /* FIX FOCUS STYLES TO REMOVE WHITE BORDERS */
         .seg-item:focus-within { 
-            outline: none; 
+            outline: none !important; 
             box-shadow: 0 0 0 2px rgba(212,175,55,0.4) !important; 
+        }
+
+        /* Remove fieldset default styling */
+        fieldset {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            margin: 0;
+            padding: 0;
         }
 
         .decor-label{ 
@@ -1138,3 +1168,11 @@
     </script>
 </body>
 </html>
+
+
+    
+              <script>
+                              
+              </script>
+                        </body>
+                        </html>
