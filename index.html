@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -162,6 +163,57 @@
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
+        /* Segmented radio buttons (mobile-friendly) */
+        .segmented{
+            display:flex;
+            gap:8px;
+            flex-wrap:wrap;
+            margin:8px 0 4px
+        }
+        
+        .seg-item{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:9px 12px;
+            border:1px solid #d4af37;
+            border-radius:999px;
+            color:#d4af37;
+            cursor:pointer;
+            user-select:none;
+            -webkit-tap-highlight-color:transparent
+        }
+        
+        .seg-item input{ 
+            display:none 
+        }
+        
+        .seg-item:has(input:checked),
+        .seg-item input:checked + span{
+            background:#d4af37;
+            color:#0b0f14;
+            border-color:#d4af37
+        }
+        
+        .segmented.small .seg-item{ 
+            padding:7px 10px;
+            font-size:.92rem 
+        }
+
+        /* iOS tap feedback improvement */
+        .seg-item:active{ 
+            transform: translateY(0.5px) 
+        }
+
+        .decor-label{ 
+            color:#d4af37;
+            font-weight:700 
+        }
+        
+        .decor-type{ 
+            margin-top:8px 
+        }
+
         .btn {
             background: linear-gradient(45deg, #B8860B, #FFD700);
             color: #000;
@@ -255,78 +307,13 @@
             color: #000;
         }
 
-        .button-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .btn-option {
-            flex: 1;
-            background: #1a1a1a;
-            color: #FFD700;
-            border: 2px solid #333;
-            padding: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .btn-option:hover {
-            background: #333;
-            border-color: #FFD700;
-            transform: translateY(-2px);
-        }
-
-        .btn-option.active {
-            background: #FFD700;
-            color: #000;
-            border-color: #FFD700;
-        }
-
-        .decorations-container {
-            margin-top: 20px;
+        .sub-location-container {
+            margin-top: 15px;
             display: none;
         }
 
-        .decorations-container.visible {
+        .sub-location-container.show {
             display: block;
-        }
-
-        .decorations-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .decorations-btn {
-            flex: 1;
-            background: #1a1a1a;
-            color: #FFD700;
-            border: 2px solid #333;
-            padding: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .decorations-btn:hover {
-            background: #333;
-            border-color: #FFD700;
-            transform: translateY(-2px);
-        }
-
-        .decorations-btn.active {
-            background: #FFD700;
-            color: #000;
-            border-color: #FFD700;
         }
 
         @media (max-width: 600px) {
@@ -344,15 +331,6 @@
             
             .location-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            
-            .button-group {
-                flex-direction: column;
-            }
-            
-            .btn-option, .decorations-btn {
-                flex: none;
-                width: 100%;
             }
         }
     </style>
@@ -402,6 +380,16 @@
                     </select>
                 </div>
 
+                <div class="sub-location-container" id="subLocationContainer">
+                    <div class="form-group">
+                        <label for="subLocation">Sub-location (area inside selected place)</label>
+                        <select id="subLocation" name="subLocation" disabled>
+                            <option value="">Select sub-location</option>
+                        </select>
+                        <div class="hint">Choose a place first to see sub-locations.</div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="customLocation">Or Enter Custom Location:</label>
                     <input type="text" id="customLocation" name="customLocation" placeholder="Enter location if not listed above...">
@@ -430,21 +418,53 @@
 
             <div class="form-section">
                 <h2 class="section-title"><i class="fas fa-car"></i> Service Type</h2>
+                <fieldset class="segmented" role="radiogroup" aria-label="Service type">
+                    <label class="seg-item">
+                        <input type="radio" name="serviceTypeRadio" value="Wedding" checked>
+                        <span>Wedding</span>
+                    </label>
+                    <label class="seg-item">
+                        <input type="radio" name="serviceTypeRadio" value="Event">
+                        <span>Event</span>
+                    </label>
+                    <label class="seg-item">
+                        <input type="radio" name="serviceTypeRadio" value="Photoshoot">
+                        <span>Photoshoot</span>
+                    </label>
+                </fieldset>
+                <input type="hidden" id="serviceType" name="serviceType" value="Wedding">
                 
-                <div class="button-group">
-                    <button type="button" class="btn-option active" data-service="wedding">Wedding</button>
-                    <button type="button" class="btn-option" data-service="event">Event</button>
-                    <button type="button" class="btn-option" data-service="photoshoot">Photoshoot</button>
-                </div>
-            </div>
-
-            <div class="form-section">
-                <h2 class="section-title"><i class="fas fa-paint-brush"></i> Decoration</h2>
-                <div id="decorationContainer" class="decorations-container">
-                    <div class="decorations-group">
-                        <button type="button" class="decorations-btn active" data-decor="artificial">Artificial Flowers</button>
-                        <button type="button" class="decorations-btn" data-decor="fresh">Fresh Flowers</button>
+                <div id="decorBlock" class="decor-wrap" aria-live="polite">
+                    <div class="decor-row">
+                        <span class="decor-label">Want Decoration?</span>
+                        <fieldset class="segmented small" role="radiogroup" aria-label="Want decoration">
+                            <label class="seg-item">
+                                <input type="radio" name="wantDecorationRadio" value="No" checked>
+                                <span>No</span>
+                            </label>
+                            <label class="seg-item">
+                                <input type="radio" name="wantDecorationRadio" value="Yes">
+                                <span>Yes</span>
+                            </label>
+                        </fieldset>
                     </div>
+                    
+                    <div id="decorTypeRow" class="decor-type" hidden>
+                        <span class="decor-label">Decoration Type</span>
+                        <fieldset class="segmented small" role="radiogroup" aria-label="Decoration type">
+                            <label class="seg-item">
+                                <input type="radio" name="decorationTypeRadio" value="Artificial Flowers">
+                                <span>Artificial Flowers</span>
+                            </label>
+                            <label class="seg-item">
+                                <input type="radio" name="decorationTypeRadio" value="Fresh Flowers">
+                                <span>Fresh Flowers</span>
+                            </label>
+                        </fieldset>
+                    </div>
+                    
+                    <input type="hidden" id="wantDecoration" name="wantDecoration" value="No">
+                    <input type="hidden" id="decoration" name="decoration" value="">
                 </div>
             </div>
 
@@ -515,13 +535,32 @@
     </div>
 
     <script>
+        // Sub-location data
+        const SUB_LOCATIONS = {
+            'Srinagar': ['Rajbagh', 'Jawahar Nagar', 'Lal Chowk', 'Dalgate', 'Nishat', 'Shalimar', 'Hazratbal', 'Nowhatta', 'Bemina', 'Hyderpora', 'Chanapora', 'Sanat Nagar', 'Baghat'],
+            'Leh': ['Leh City', 'Shanti Stupa', 'Hall of Fame', 'Nubra Valley', 'Thiksey Monastery', 'Diskit Monastery', 'Shey Palace', 'Alchi Monastery', 'Phyang Monastery', 'Lhalung Monastery'],
+            'Kargil': ['Kargil City', 'Drass', 'Gyalmer', 'Gyashan', 'Sankoo', 'Turtuk', 'Ladakh', 'Kargil Valley', 'Srinagar Road', 'Leh Road'],
+            'Pahalgam': ['Betaab Valley Gate', 'Aru Road', 'Main Market', 'Lidder River Bank', 'Betaab Valley', 'Aru Valley', 'Kokernag', 'Verinag', 'Qazigund'],
+            'Gulmarg': ['Kongdori', 'Apharwat Base', 'Tangmarg Road', 'Market Area', 'Gulmarg Valley', 'Achabal', 'Banihal', 'Srinagar Road', 'Leh Road'],
+            'Sonamarg': ['Thajiwas Base', 'Main Market', 'Baltal Road', 'Betaab Valley', 'Aru Valley', 'Kokernag', 'Verinag', 'Qazigund'],
+            'Nubra Valley': ['Nubra Valley', 'Hunder', 'Diskit', 'Sumur', 'Lamayuru', 'Hikkim', 'Turtuk', 'Chushul', 'Changthang', 'Ladakh'],
+            'Anantnag': ['Lal Chowk Anantnag', 'Khanabal', 'Mattan', 'Pahalgam', 'Betaab Valley', 'Aru Valley', 'Kokernag', 'Verinag', 'Qazigund'],
+            'Budgam': ['Magam', 'Chadoora', 'Beerwah', 'Yusmarg', 'Gurez', 'Razdan Pass', 'Wular Lake'],
+            'Baramulla': ['Main Town', 'Uri Road', 'Sopore Road', 'Gulmarg', 'Kongdori', 'Tanmarg', 'Sopore', 'Wagoora', 'Pattan'],
+            'Bandipora': ['Main Town', 'Near Wular Lake', 'Gurez', 'Razdan Pass', 'Wular Lake'],
+            'Kupwara': ['Main Town', 'Handwara Market', 'Lolab Valley', 'Keran', 'Machil', 'Bangus Valley'],
+            'Shopian': ['Main Town', 'Aglar Road', 'Peer Ki Gali', 'Hirpora']
+        };
+
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             // Get form values
-            const serviceType = document.querySelector('.btn-option.active').dataset.service;
-            const decoration = document.querySelector('.decorations-btn.active')?.dataset.decor || 'none';
-            const location = document.getElementById('location').value || document.querySelector('.location-item.selected')?.dataset.value;
+            const serviceType = document.querySelector('input[name="serviceTypeRadio"]:checked')?.value || 'Wedding';
+            const wantDecoration = document.querySelector('input[name="wantDecorationRadio"]:checked')?.value || 'No';
+            const decoration = document.querySelector('input[name="decorationTypeRadio"]:checked')?.value || '';
+            const location = document.getElementById('location').value;
+            const subLocation = document.getElementById('subLocation').value;
             const customLocation = document.getElementById('customLocation').value;
             const vehicle = document.getElementById('vehicle').value;
             const date = document.getElementById('date').value;
@@ -542,19 +581,30 @@
             }
             
             // Create WhatsApp message
-            const whatsappMessage = `New Booking Request from ${name}:
-Service Type: ${serviceType}
-Decoration: ${decoration === 'none' ? 'None' : decoration}
-Location: ${location || customLocation}
-Vehicle: ${vehicle}
-Date: ${date}
-Phone: ${phone}
-Email: ${email}
-Special Requests: ${message}`;
-
+            const parts = [
+                'Valley Wedding Cars — New Booking',
+                `Name: ${name}`,
+                `Phone: +91${phone}`,
+                `Date: ${date}${document.getElementById('eventTime').value ? ' ' + document.getElementById('eventTime').value : ''}`,
+                `Service: ${serviceType}`,
+                `Car: ${vehicle}`,
+                `Location: ${location || customLocation}`,
+                subLocation ? `Sub-location: ${subLocation}` : null,
+                message ? `Special Requests: ${message}` : null
+            ];
+            
+            if (serviceType === 'Wedding') {
+                parts.push(`Decoration: ${wantDecoration}`);
+                if (wantDecoration === 'Yes' && decoration) {
+                    parts.push(`Decoration Type: ${decoration}`);
+                }
+            }
+            
+            const messageText = parts.filter(Boolean).join('\n');
+            
             // Encode the message and open WhatsApp
-            const encodedMessage = encodeURIComponent(whatsappMessage);
-            const whatsappUrl = `https://wa.me/9205171767?text=${encodedMessage}`;
+            const encodedMessage = encodeURIComponent(messageText);
+            const whatsappUrl = `https://wa.me/919205171767?text=${encodedMessage}`;
             
             // Open WhatsApp in new tab
             window.open(whatsappUrl, '_blank');
@@ -571,25 +621,24 @@ Special Requests: ${message}`;
             });
             
             // Reset service selection
-            document.querySelectorAll('.btn-option').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.service === 'wedding') {
-                    btn.classList.add('active');
-                }
+            document.querySelectorAll('input[name="serviceTypeRadio"]').forEach(radio => {
+                radio.checked = radio.value === 'Wedding';
             });
             
             // Reset decoration selection
-            document.querySelectorAll('.decorations-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.decor === 'artificial') {
-                    btn.classList.add('active');
-                }
+            document.querySelectorAll('input[name="wantDecorationRadio"]').forEach(radio => {
+                radio.checked = radio.value === 'No';
             });
             
-            // Hide decorations container if not wedding
-            if (serviceType !== 'wedding') {
-                document.getElementById('decorationContainer').classList.remove('visible');
-            }
+            document.querySelectorAll('input[name="decorationTypeRadio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Hide sub-location container
+            document.getElementById('subLocationContainer').classList.remove('show');
+            
+            // Hide decoration type row
+            document.getElementById('decorTypeRow').hidden = true;
         });
 
         // Set minimum date to today
@@ -600,6 +649,25 @@ Special Requests: ${message}`;
         document.getElementById('location').addEventListener('change', function() {
             if (this.value) {
                 document.getElementById('customLocation').value = '';
+                
+                // Show sub-location container for specific locations
+                const subLocationContainer = document.getElementById('subLocationContainer');
+                if (SUB_LOCATIONS[this.value]) {
+                    subLocationContainer.classList.add('show');
+                    
+                    // Populate sub-locations
+                    const subLocationSelect = document.getElementById('subLocation');
+                    subLocationSelect.innerHTML = '<option value="">Select sub-location</option>';
+                    
+                    SUB_LOCATIONS[this.value].forEach(location => {
+                        const option = document.createElement('option');
+                        option.value = location;
+                        option.textContent = location;
+                        subLocationSelect.appendChild(option);
+                    });
+                } else {
+                    subLocationContainer.classList.remove('show');
+                }
             }
         });
 
@@ -617,42 +685,107 @@ Special Requests: ${message}`;
                 // Set the value in the dropdown
                 const dropdown = document.getElementById('location');
                 dropdown.value = this.dataset.value;
-            });
-        });
-
-        // Handle service type selection
-        document.querySelectorAll('.btn-option').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from all buttons
-                document.querySelectorAll('.btn-option').forEach(b => {
-                    b.classList.remove('active');
-                });
                 
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                // Show/hide decoration options based on service type
-                const decorationContainer = document.getElementById('decorationContainer');
-                if (this.dataset.service === 'wedding') {
-                    decorationContainer.classList.add('visible');
+                // Show sub-location container for specific locations
+                const subLocationContainer = document.getElementById('subLocationContainer');
+                if (SUB_LOCATIONS[this.dataset.value]) {
+                    subLocationContainer.classList.add('show');
+                    
+                    // Populate sub-locations
+                    const subLocationSelect = document.getElementById('subLocation');
+                    subLocationSelect.innerHTML = '<option value="">Select sub-location</option>';
+                    
+                    SUB_LOCATIONS[this.dataset.value].forEach(location => {
+                        const option = document.createElement('option');
+                        option.value = location;
+                        option.textContent = location;
+                        subLocationSelect.appendChild(option);
+                    });
                 } else {
-                    decorationContainer.classList.remove('visible');
+                    subLocationContainer.classList.remove('show');
                 }
             });
         });
 
-        // Handle decoration selection
-        document.querySelectorAll('.decorations-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from all decoration buttons
-                document.querySelectorAll('.decorations-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
-                
-                // Add active class to clicked button
-                this.classList.add('active');
-            });
+        // Service selection logic
+        const serviceHidden = document.getElementById('serviceType');
+        const decorBlock = document.getElementById('decorBlock');
+        const decorTypeRow = document.getElementById('decorTypeRow');
+        const wantDecorHidden = document.getElementById('wantDecoration');
+        const decorHidden = document.getElementById('decoration');
+
+        function updateDecorVisibility() {
+            const serviceVal = document.querySelector('input[name="serviceTypeRadio"]:checked')?.value || 'Wedding';
+            serviceHidden.value = serviceVal;
+            const showDecor = serviceVal === 'Wedding';
+            decorBlock.style.display = showDecor ? 'block' : 'none';
+            if (!showDecor) {
+                // Reset decoration state
+                document.querySelector('input[name="wantDecorationRadio"][value="No"]').checked = true;
+                wantDecorHidden.value = 'No';
+                decorTypeRow.hidden = true;
+                decorHidden.value = '';
+                const checkedType = document.querySelector('input[name="decorationTypeRadio"]:checked');
+                if (checkedType) checkedType.checked = false;
+            }
+        }
+
+        // Init service
+        document.querySelectorAll('input[name="serviceTypeRadio"]').forEach(r => {
+            r.addEventListener('change', updateDecorVisibility, { passive: true });
+            r.addEventListener('input', updateDecorVisibility, { passive: true });
         });
+        updateDecorVisibility();
+
+        // Want decoration Yes/No
+        function updateWantDecor() {
+            const val = document.querySelector('input[name="wantDecorationRadio"]:checked')?.value || 'No';
+            wantDecorHidden.value = val;
+            if (val === 'Yes') {
+                decorTypeRow.hidden = false;
+            } else {
+                decorTypeRow.hidden = true;
+                decorHidden.value = '';
+                const checkedType = document.querySelector('input[name="decorationTypeRadio"]:checked');
+                if (checkedType) checkedType.checked = false;
+            }
+        }
+
+        document.querySelectorAll('input[name="wantDecorationRadio"]').forEach(r => {
+            r.addEventListener('change', updateWantDecor, { passive: true });
+            r.addEventListener('input', updateWantDecor, { passive: true });
+        });
+        updateWantDecor();
+
+        // Decoration type
+        document.querySelectorAll('input[name="decorationTypeRadio"]').forEach(r => {
+            r.addEventListener('change', () => {
+                decorHidden.value = r.checked ? r.value : '';
+            }, { passive: true });
+        });
+
+        // Populate sub-locations on page load if needed
+        function populateSubLocations() {
+            const place = document.getElementById('location').value;
+            const list = SUB_LOCATIONS[place] || [];
+            const subSel = document.getElementById('subLocation');
+            subSel.innerHTML = '<option value="">Select sub-location</option>';
+            if (list.length === 0) {
+                subSel.disabled = true;
+                return;
+            }
+            list.forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                subSel.appendChild(opt);
+            });
+            subSel.disabled = false;
+        }
+
+        // Add event listener for location change
+        document.getElementById('location').addEventListener('change', populateSubLocations, { passive: true });
     </script>
 </body>
 </html>
+```
