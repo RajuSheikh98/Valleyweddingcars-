@@ -623,6 +623,109 @@
             'Shopian': ['Main Town', 'Aglar Road', 'Peer Ki Gali', 'Hirpora']
         };
 
+        // WhatsApp message builder function
+        function buildBookingMessage() {
+            // Helper to safely get values
+            const getVal = id => (document.getElementById(id)?.value || '').trim();
+            
+            // Required/common fields
+            const fullName = getVal('name');
+            const phone = getVal('phone');
+            const eventDate = getVal('date');
+            const service = getVal('serviceType');
+            const vehicle = getVal('vehicle');
+            const location = getVal('location');
+            const subLocation = getVal('subLocation');
+            const customLocation = getVal('customLocation');
+            const message = getVal('message');
+            
+            // Decoration fields
+            const wantDecoration = getVal('wantDecoration');
+            const decorationType = getVal('decoration');
+            
+            // Compose Location line with precedence: custom > location (+ sub)
+            const locationParts = [];
+            if (customLocation) {
+                locationParts.push(customLocation);
+            } else {
+                if (location) locationParts.push(location);
+                if (subLocation) locationParts.push(subLocation);
+            }
+            const locationStr = locationParts.join(' — ');
+            
+            // Sections
+            const header = 'Valley Wedding Cars — Booking Request';
+            const divider = '— — — — — — — — — —';
+            const clientSec = [
+                'Client',
+                `- Name: ${fullName}`,
+                `- Phone: +91${phone}`
+            ].join('\n');
+            
+            const eventSec = [
+                'Event',
+                `- Date: ${eventDate}`,
+                `- Service: ${service}`,
+                `- Car: ${vehicle}`,
+                locationStr ? `- Location: ${locationStr}` : null,
+                message ? `- Special Requests: ${message}` : null
+            ].filter(Boolean).join('\n');
+            
+            // Decoration section only for Wedding
+            let decorSec = '';
+            if (service === 'Wedding') {
+                const decorLines = [
+                    'Decoration',
+                    `- Need Decoration: ${wantDecoration || 'No'}`
+                ];
+                if ((wantDecoration || '').toLowerCase() === 'yes' && decorationType) {
+                    decorLines.push(`- Type: ${decorationType}`);
+                }
+                decorSec = decorLines.join('\n');
+            }
+            
+            // Join all non-empty sections
+            const parts = [header, divider, clientSec, '', eventSec];
+            if (decorSec) parts.push('', decorSec);
+            parts.push('', 'Please reply with availability and pricing.');
+            
+            return parts.filter(Boolean).join('\n');
+        }
+
+        function openWhatsAppWithBooking() {
+            // Basic validation
+            if (!document.getElementById('name')?.value.trim()) {
+                alert('Please enter your full name.');
+                return;
+            }
+            if (!document.getElementById('phone')?.value.trim()) {
+                alert('Please enter your phone number.');
+                return;
+            }
+            if (!document.getElementById('date')?.value.trim()) {
+                alert('Please select event date.');
+                return;
+            }
+            if (!document.getElementById('serviceType')?.value.trim()) {
+                alert('Please select a service type.');
+                return;
+            }
+            if (!document.getElementById('vehicle')?.value.trim()) {
+                alert('Please select a car.');
+                return;
+            }
+            if (!document.getElementById('location')?.value.trim() && !document.getElementById('customLocation')?.value.trim()) {
+                alert('Please choose a location or enter an Other Location.');
+                return;
+            }
+            
+            const msg = buildBookingMessage();
+            const phoneIntl = '919205171767';
+            const url = `https://wa.me/${phoneIntl}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Add event listener to form submit
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -651,44 +754,6 @@
                 return;
             }
             
-            // Create WhatsApp message with enhanced formatting
-            const parts = [
-                '╔══════════════════════════════════════╗',
-                '           🎉 VALLEY WEDDING CARS 🎉',
-                '╚══════════════════════════════════════╝',
-                '',
-                '📋 NEW BOOKING REQUEST',
-                '──────────────────────────────',
-                `👤 Name: ${name}`,
-                `📞 Phone: +91${phone}`,
-                `📧 Email: ${email}`,
-                `📅 Date: ${date}`,
-                `📍 Service: ${serviceType}`,
-                `🚗 Vehicle: ${vehicle}`,
-                `📍 Location: ${location || customLocation}`,
-                subLocation ? `🏢 Sub-location: ${subLocation}` : null,
-                wantDecoration === 'Yes' ? `🌸 Decoration: ${wantDecoration}` : null,
-                wantDecoration === 'Yes' && decoration ? `🌺 Decoration Type: ${decoration}` : null,
-                message ? `📝 Special Requests: ${message}` : null,
-                '',
-                '──────────────────────────────',
-                'Thank you for choosing Valley Wedding Cars!',
-                'We will contact you shortly to confirm your booking.',
-                '╚══════════════════════════════════════╝'
-            ];
-            
-            const messageText = parts.filter(Boolean).join('\n');
-            
-            // Encode the message and open WhatsApp
-            const encodedMessage = encodeURIComponent(messageText);
-            const whatsappUrl = `https://wa.me/919205171767?text=${encodedMessage}`;
-            
-            // Open WhatsApp in new tab
-            window.open(whatsappUrl, '_blank');
-            
-            // Show success message
-            alert(`Booking request sent successfully! We will contact you shortly.`);
-            
             // Display booking summary
             document.getElementById('summaryService').textContent = serviceType;
             document.getElementById('summaryLocation').textContent = location || customLocation;
@@ -697,6 +762,9 @@
             document.getElementById('summaryName').textContent = name;
             document.getElementById('summaryPhone').textContent = `+91${phone}`;
             document.getElementById('bookingSummary').style.display = 'block';
+            
+            // Open WhatsApp
+            openWhatsAppWithBooking();
             
             // Reset form
             this.reset();
