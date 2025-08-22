@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -427,6 +426,15 @@
             display: block;
         }
 
+        /* Hide decoration options initially */
+        .decoration-options {
+            display: none;
+        }
+
+        .decoration-options.show {
+            display: block;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -620,18 +628,21 @@
                         </fieldset>
                     </div>
                     
-                    <div id="decorTypeRow" class="decor-type" hidden>
-                        <span class="decor-label">Decoration Type</span>
-                        <fieldset class="segmented small" role="radiogroup" aria-label="Decoration type">
-                            <label class="seg-item">
-                                <input type="radio" name="decorationTypeRadio" value="Artificial Flowers">
-                                <span>Artificial Flowers</span>
-                            </label>
-                            <label class="seg-item">
-                                <input type="radio" name="decorationTypeRadio" value="Fresh Flowers">
-                                <span>Fresh Flowers</span>
-                            </label>
-                        </fieldset>
+                    <!-- Decoration Type Options - Hidden by default -->
+                    <div id="decorationOptions" class="decoration-options">
+                        <div class="decor-type">
+                            <span class="decor-label">Decoration Type</span>
+                            <fieldset class="segmented small" role="radiogroup" aria-label="Decoration type">
+                                <label class="seg-item">
+                                    <input type="radio" name="decorationTypeRadio" value="Artificial Flowers">
+                                    <span>Artificial Flowers</span>
+                                </label>
+                                <label class="seg-item">
+                                    <input type="radio" name="decorationTypeRadio" value="Fresh Flowers">
+                                    <span>Fresh Flowers</span>
+                                </label>
+                            </fieldset>
+                        </div>
                     </div>
                     
                     <input type="hidden" id="wantDecoration" name="wantDecoration" value="No">
@@ -752,7 +763,7 @@
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">Phone:</span>
-                    <span class="summary-value" id="summaryPhone">+919205171767</span>
+                    <span class="summary-value" id="summaryPhone">+917075196141</span>
                 </div>
             </div>
 
@@ -875,12 +886,12 @@
             
             // Decoration section only for Wedding
             let decorSec = '';
-            if (service === 'Wedding') {
+            if (service === 'Wedding' && wantDecoration === 'Yes') {
                 const decorLines = [
                     'Decoration',
                     `- Need Decoration: ${wantDecoration || 'No'}`
                 ];
-                if ((wantDecoration || '').toLowerCase() === 'yes' && decorationType) {
+                if (decorationType) {
                     decorLines.push(`- Type: ${decorationType}`);
                 }
                 decorSec = decorLines.join('\n');
@@ -926,7 +937,7 @@
             }
             
             const msg = buildBookingMessage();
-            const phoneIntl = '919205171767';
+            const phoneIntl = '917075196141'; // Updated WhatsApp number
             const url = `https://wa.me/${phoneIntl}?text=${encodeURIComponent(msg)}`;
             window.open(url, '_blank', 'noopener,noreferrer');
         }
@@ -979,7 +990,7 @@
             document.getElementById('summaryVehicle').textContent = vehicle;
             document.getElementById('summaryDate').textContent = date;
             document.getElementById('summaryName').textContent = name;
-            document.getElementById('summaryPhone').textContent = `+91${phone}`;
+            document.getElementById('summaryPhone').textContent = `+917075196141`;
             document.getElementById('bookingSummary').style.display = 'block';
             
             // Open WhatsApp
@@ -1010,8 +1021,8 @@
             // Hide sub-location container
             document.getElementById('subLocationContainer').classList.remove('show');
             
-            // Hide decoration type row
-            document.getElementById('decorTypeRow').hidden = true;
+            // Hide decoration options
+            document.getElementById('decorationOptions').classList.remove('show');
             
             // Hide car image
             document.getElementById('carImageContainer').classList.remove('show');
@@ -1102,7 +1113,28 @@
                 }
             });
         });
+
+        // Decoration toggle - Show/hide decoration options based on "Want Decoration?" selection
+        document.querySelectorAll('input[name="wantDecorationRadio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const decorationOptions = document.getElementById('decorationOptions');
+                if (this.value === 'Yes') {
+                    decorationOptions.classList.add('show');
+                } else {
+                    decorationOptions.classList.remove('show');
+                }
+                
+                // Update hidden field
+                document.getElementById('wantDecoration').value = this.value;
+            });
+        });
+
+        // Decoration type selection - update hidden field
+        document.querySelectorAll('input[name="decorationTypeRadio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('decoration').value = this.value;
+            });
+        });
     </script>
 </body>
 </html>
-```
