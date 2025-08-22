@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -338,6 +339,24 @@
             margin-top: 5px;
         }
 
+        .car-image-container {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .car-image-container.show {
+            display: block;
+        }
+
+        .car-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid #d4af37;
+        }
+
         .booking-summary {
             background: rgba(255, 215, 0, 0.08);
             padding: 20px;
@@ -368,6 +387,83 @@
             text-align: right;
         }
 
+        .location-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .location-wrapper .form-group {
+            flex: 1;
+        }
+
+        .hours-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .hour-option {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .hour-option:hover {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .hour-option.selected {
+            background: #d4af37;
+            color: #000;
+            border-color: #d4af37;
+        }
+
+        .driving-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .driving-option {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .driving-option:hover {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .driving-option.selected {
+            background: #d4af37;
+            color: #000;
+            border-color: #d4af37;
+        }
+
+        .custom-driving-input {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .custom-driving-input.show {
+            display: block;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -379,6 +475,10 @@
             
             .quote {
                 font-size: 1rem;
+            }
+            
+            .location-wrapper {
+                flex-direction: column;
             }
             
             .location-grid {
@@ -409,31 +509,76 @@
 
         <form id="bookingForm">
             <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-comments"></i> Enquiry Type</h2>
+                <fieldset class="segmented" role="radiogroup" aria-label="Enquiry type">
+                    <label class="seg-item">
+                        <input type="radio" name="enquiryType" value="Just Checking" checked>
+                        <span>Just Checking</span>
+                    </label>
+                    <label class="seg-item">
+                        <input type="radio" name="enquiryType" value="Know the Price">
+                        <span>Know the Price</span>
+                    </label>
+                    <label class="seg-item">
+                        <input type="radio" name="enquiryType" value="Booking Now">
+                        <span>Booking Now</span>
+                    </label>
+                </fieldset>
+            </div>
+
+            <div class="form-section">
                 <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Location Details</h2>
                 
-                <div class="form-group">
-                    <label for="location">Select Your Location in Kashmir:</label>
-                    <select id="location" name="location" required>
-                        <option value="">Choose a location...</option>
-                        <option value="Srinagar">Srinagar</option>
-                        <option value="Leh">Leh</option>
-                        <option value="Kargil">Kargil</option>
-                        <option value="Pahalgam">Pahalgam</option>
-                        <option value="Gulmarg">Gulmarg</option>
-                        <option value="Sonamarg">Sonamarg</option>
-                        <option value="Nubra Valley">Nubra Valley</option>
-                        <option value="Anantnag">Anantnag</option>
-                        <option value="Baramulla">Baramulla</option>
-                        <option value="Sopore">Sopore</option>
-                        <option value="Bandipora">Bandipora</option>
-                        <option value="Kupwara">Kupwara</option>
-                        <option value="Udhampur">Udhampur</option>
-                        <option value="Rajouri">Rajouri</option>
-                        <option value="Poonch">Poonch</option>
-                        <option value="Doda">Doda</option>
-                        <option value="Kishtwar">Kishtwar</option>
-                        <option value="Ramban">Ramban</option>
-                    </select>
+                <div class="location-wrapper">
+                    <div class="form-group">
+                        <label for="startLocation">Event Start Point:</label>
+                        <select id="startLocation" name="startLocation" required>
+                            <option value="">Choose a location...</option>
+                            <option value="Srinagar">Srinagar</option>
+                            <option value="Leh">Leh</option>
+                            <option value="Kargil">Kargil</option>
+                            <option value="Pahalgam">Pahalgam</option>
+                            <option value="Gulmarg">Gulmarg</option>
+                            <option value="Sonamarg">Sonamarg</option>
+                            <option value="Nubra Valley">Nubra Valley</option>
+                            <option value="Anantnag">Anantnag</option>
+                            <option value="Baramulla">Baramulla</option>
+                            <option value="Sopore">Sopore</option>
+                            <option value="Bandipora">Bandipora</option>
+                            <option value="Kupwara">Kupwara</option>
+                            <option value="Udhampur">Udhampur</option>
+                            <option value="Rajouri">Rajouri</option>
+                            <option value="Poonch">Poonch</option>
+                            <option value="Doda">Doda</option>
+                            <option value="Kishtwar">Kishtwar</option>
+                            <option value="Ramban">Ramban</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="endLocation">Event End Point:</label>
+                        <select id="endLocation" name="endLocation" required>
+                            <option value="">Choose a location...</option>
+                            <option value="Srinagar">Srinagar</option>
+                            <option value="Leh">Leh</option>
+                            <option value="Kargil">Kargil</option>
+                            <option value="Pahalgam">Pahalgam</option>
+                            <option value="Gulmarg">Gulmarg</option>
+                            <option value="Sonamarg">Sonamarg</option>
+                            <option value="Nubra Valley">Nubra Valley</option>
+                            <option value="Anantnag">Anantnag</option>
+                            <option value="Baramulla">Baramulla</option>
+                            <option value="Sopore">Sopore</option>
+                            <option value="Bandipora">Bandipora</option>
+                            <option value="Kupwara">Kupwara</option>
+                            <option value="Udhampur">Udhampur</option>
+                            <option value="Rajouri">Rajouri</option>
+                            <option value="Poonch">Poonch</option>
+                            <option value="Doda">Doda</option>
+                            <option value="Kishtwar">Kishtwar</option>
+                            <option value="Ramban">Ramban</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="kashmir-locations">
@@ -480,12 +625,24 @@
                         <span>Wedding</span>
                     </label>
                     <label class="seg-item">
-                        <input type="radio" name="serviceTypeRadio" value="Event">
-                        <span>Event</span>
+                        <input type="radio" name="serviceTypeRadio" value="Engagement">
+                        <span>Engagement</span>
                     </label>
                     <label class="seg-item">
-                        <input type="radio" name="serviceTypeRadio" value="Photoshoot">
-                        <span>Photoshoot</span>
+                        <input type="radio" name="serviceTypeRadio" value="Proposal">
+                        <span>Proposal</span>
+                    </label>
+                    <label class="seg-item">
+                        <input type="radio" name="serviceTypeRadio" value="Photoshoot/video shoot">
+                        <span>Photoshoot/Video Shoot</span>
+                    </label>
+                    <label class="seg-item">
+                        <input type="radio" name="serviceTypeRadio" value="Airport Pickup/Drop">
+                        <span>Airport Pickup/Drop</span>
+                    </label>
+                    <label class="seg-item">
+                        <input type="radio" name="serviceTypeRadio" value="Sightseeing/Luxury Tour">
+                        <span>Sightseeing/Luxury Tour</span>
                     </label>
                 </fieldset>
                 <input type="hidden" id="serviceType" name="serviceType" value="Wedding">
@@ -528,25 +685,40 @@
                 <h2 class="section-title"><i class="fas fa-car"></i> Vehicle Selection</h2>
                 
                 <div class="form-group">
-                    <label for="vehicle">Select Your Wedding Car:</label>
+                    <label for="vehicle">Select Your Vehicle:</label>
                     <select id="vehicle" name="vehicle" required>
                         <option value="">Choose a vehicle...</option>
-                        <option value="BMW Convertible">BMW Convertible</option>
-                        <option value="Audi A6">Audi A6</option>
-                        <option value="Mercedes S Class">Mercedes S Class</option>
-                        <option value="Mercedes Maybach S500">Mercedes Maybach S500</option>
-                        <option value="BMW 7 Series">BMW 7 Series</option>
-                        <option value="G Wagon">G Wagon</option>
-                        <option value="Mercedes CLA 200">Mercedes CLA 200</option>
-                        <option value="BMW 5 Series 1">BMW 5 Series 1</option>
-                        <option value="BMW 5 Series 2">BMW 5 Series 2</option>
+                        <option value="BMW 330D Convertible">BMW 330D Convertible</option>
+                        <option value="MERCEDES Maybach">MERCEDES Maybach</option>
+                        <option value="BMW 5 SERIES G30">BMW 5 SERIES G30</option>
+                        <option value="BMW 5 Series F10">BMW 5 Series F10</option>
                         <option value="Range Rover Sport">Range Rover Sport</option>
+                        <option value="Mercedes G wagon">Mercedes G wagon</option>
+                        <option value="AUDI A6">AUDI A6</option>
+                        <option value="MERCEDES S CLASS S350">MERCEDES S CLASS S350</option>
                     </select>
                 </div>
 
+                <div class="car-image-container" id="carImageContainer">
+                    <img id="carImage" class="car-image" src="" alt="Selected Car">
+                </div>
+
                 <div class="form-group">
-                    <label for="date">Date:</label>
+                    <label for="date">Event Date:</label>
                     <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventHours">Event Hours:</label>
+                    <div class="hours-container" id="hoursContainer">
+                        <div class="hour-option" data-hours="2">2 Hours</div>
+                        <div class="hour-option" data-hours="4">4 Hours</div>
+                        <div class="hour-option" data-hours="6">6 Hours</div>
+                        <div class="hour-option" data-hours="8">8 Hours</div>
+                        <div class="hour-option" data-hours="12">12 Hours</div>
+                        <div class="hour-option" data-hours="24">Full Day</div>
+                    </div>
+                    <input type="hidden" id="eventHours" name="eventHours" value="">
                 </div>
             </div>
 
@@ -574,6 +746,20 @@
                 </div>
             </div>
 
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-car-side"></i> Driving Options</h2>
+                <div class="driving-options" id="drivingOptions">
+                    <div class="driving-option" data-option="Chauffeur">NEED CHAUFFEUR</div>
+                    <div class="driving-option" data-option="Self Drive">SELF DRIVE</div>
+                    <div class="driving-option" data-option="Other">OTHER</div>
+                </div>
+                <div class="custom-driving-input" id="customDrivingInput">
+                    <label for="customDriving">Please specify:</label>
+                    <input type="text" id="customDriving" name="customDriving" placeholder="Specify driving option...">
+                </div>
+                <input type="hidden" id="drivingOption" name="drivingOption" value="">
+            </div>
+
             <button type="submit" class="btn">
                 <i class="fas fa-bookmark"></i> BOOK YOUR WEDDING CAR
             </button>
@@ -582,6 +768,10 @@
                 <h3 style="color: #FFD700; margin-bottom: 15px; text-align: center;">
                     <i class="fas fa-check-circle"></i> Booking Summary
                 </h3>
+                <div class="summary-item">
+                    <span class="summary-label">Enquiry Type:</span>
+                    <span class="summary-value" id="summaryEnquiry">Just Checking</span>
+                </div>
                 <div class="summary-item">
                     <span class="summary-label">Service:</span>
                     <span class="summary-value" id="summaryService">Wedding</span>
@@ -643,10 +833,25 @@
             'Ramban': ['Main Town', 'Chenab Valley', 'Bhaderwah']
         };
 
+        // Car images mapping
+        const CAR_IMAGES = {
+            "BMW 330D Convertible": "https://cdn.jsdelivr.net/gh/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design@ea51bc44bc78054acb42ec40c6ef4cdf8b28820c/uploads/2025-08-22T09-39-50-095Z-zk0do8sg0.jpg",
+            "MERCEDES Maybach": "https://cdn.jsdelivr.net/gh/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design@255df636d3b21382b701c9e6f299c7be09217698/uploads/2025-08-22T09-41-13-224Z-uwbbgn58g.jpg",
+            "BMW 5 SERIES G30": "https://cdn.jsdelivr.net/gh/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design@aa33fd78421e1a8fa9e1ff6d95800fc75c5c61b1/uploads/2025-08-22T09-42-16-425Z-k1kxvaegs.jpg",
+            "BMW 5 Series F10": "https://cdn.jsdelivr.net/gh/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design@7766519b7d48ee97144293d33bd1abcaa1dc7537/uploads/2025-08-22T09-43-49-237Z-bl0h1uu6i.jpg",
+            "Range Rover Sport": "https://cdn.jsdelivr.net/gh/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design@7651fdcb4d348df3e803de2255e8f0b5a1821dc9/uploads/2025-08-22T09-44-23-132Z-uxngpxuq2.jpg",
+            "Mercedes G wagon": "https://cdn.jsdelivr.net/gh/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design@ef38be0a76189d47ee79a3a182c2c16979e8d014/uploads/2025-08-22T09-45-09-584Z-uowaboqrx.jpg",
+            "AUDI A6": "https://cdn.jsdelivr.net/gh/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design@a47d1cecb04bbd648bc7a22ff99f74a78bee551c/uploads/2025-08-22T09-45-58-518Z-z518bw92t.jpg",
+            "MERCEDES S CLASS S350": "https://cdn.jsdelivr.net/gh/free-whiteboard-online/Free-Erasorio-Alternative-for-Collaborative-Design@b3895eb7c861beae463e395bab61648f07d56ee3/uploads/2025-08-22T09-46-50-342Z-26ldimbft.jpg"
+        };
+
         // WhatsApp message builder function
         function buildBookingMessage() {
             // Helper to safely get values
             const getVal = id => (document.getElementById(id)?.value || '').trim();
+            
+            // Enquiry type
+            const enquiryType = getVal('enquiryType');
             
             // Required/common fields
             const fullName = getVal('name');
@@ -654,9 +859,13 @@
             const eventDate = getVal('date');
             const service = getVal('serviceType');
             const vehicle = getVal('vehicle');
-            const location = getVal('location');
+            const startLocation = getVal('startLocation');
+            const endLocation = getVal('endLocation');
             const subLocation = getVal('subLocation');
             const customLocation = getVal('customLocation');
+            const eventHours = getVal('eventHours');
+            const drivingOption = getVal('drivingOption');
+            const customDriving = getVal('customDriving');
             const message = getVal('message');
             
             // Decoration fields
@@ -668,7 +877,7 @@
             if (customLocation) {
                 locationParts.push(customLocation);
             } else {
-                if (location) locationParts.push(location);
+                if (startLocation) locationParts.push(startLocation);
                 if (subLocation) locationParts.push(subLocation);
             }
             const locationStr = locationParts.join(' — ');
@@ -679,7 +888,8 @@
             const clientSec = [
                 'Client',
                 `- Name: ${fullName}`,
-                `- Phone: +91${phone}`
+                `- Phone: +91${phone}`,
+                `- Enquiry Type: ${enquiryType}`
             ].join('\n');
             
             const eventSec = [
@@ -687,7 +897,10 @@
                 `- Date: ${eventDate}`,
                 `- Service: ${service}`,
                 `- Car: ${vehicle}`,
-                locationStr ? `- Location: ${locationStr}` : null,
+                `- Start Location: ${startLocation || locationStr}`,
+                `- End Location: ${endLocation}`,
+                `- Event Hours: ${eventHours || 'Not specified'}`,
+                `- Driving Option: ${drivingOption || 'Not specified'}`,
                 message ? `- Special Requests: ${message}` : null
             ].filter(Boolean).join('\n');
             
@@ -734,8 +947,12 @@
                 alert('Please select a car.');
                 return;
             }
-            if (!document.getElementById('location')?.value.trim() && !document.getElementById('customLocation')?.value.trim()) {
-                alert('Please choose a location or enter an Other Location.');
+            if (!document.getElementById('startLocation')?.value.trim() && !document.getElementById('customLocation')?.value.trim()) {
+                alert('Please choose a start location or enter an Other Location.');
+                return;
+            }
+            if (!document.getElementById('endLocation')?.value.trim()) {
+                alert('Please choose an end location.');
                 return;
             }
             
@@ -750,22 +967,32 @@
             e.preventDefault();
             
             // Get form values
+            const enquiryType = document.querySelector('input[name="enquiryType"]:checked')?.value || 'Just Checking';
             const serviceType = document.querySelector('input[name="serviceTypeRadio"]:checked')?.value || 'Wedding';
             const wantDecoration = document.querySelector('input[name="wantDecorationRadio"]:checked')?.value || 'No';
             const decoration = document.querySelector('input[name="decorationTypeRadio"]:checked')?.value || '';
-            const location = document.getElementById('location').value;
+            const startLocation = document.getElementById('startLocation').value;
+            const endLocation = document.getElementById('endLocation').value;
             const subLocation = document.getElementById('subLocation').value;
             const customLocation = document.getElementById('customLocation').value;
             const vehicle = document.getElementById('vehicle').value;
             const date = document.getElementById('date').value;
+            const eventHours = document.getElementById('eventHours').value;
+            const drivingOption = document.getElementById('drivingOption').value;
+            const customDriving = document.getElementById('customDriving').value;
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const message = document.getElementById('message').value;
             
             // Validate form
-            if (!location && !customLocation) {
-                alert('Please select a location or enter a custom location');
+            if (!startLocation && !customLocation) {
+                alert('Please select a start location or enter a custom location');
+                return;
+            }
+            
+            if (!endLocation) {
+                alert('Please select an end location');
                 return;
             }
             
@@ -775,8 +1002,9 @@
             }
             
             // Display booking summary
+            document.getElementById('summaryEnquiry').textContent = enquiryType;
             document.getElementById('summaryService').textContent = serviceType;
-            document.getElementById('summaryLocation').textContent = location || customLocation;
+            document.getElementById('summaryLocation').textContent = startLocation || customLocation;
             document.getElementById('summaryVehicle').textContent = vehicle;
             document.getElementById('summaryDate').textContent = date;
             document.getElementById('summaryName').textContent = name;
@@ -813,6 +1041,9 @@
             
             // Hide decoration type row
             document.getElementById('decorTypeRow').hidden = true;
+            
+            // Hide car image
+            document.getElementById('carImageContainer').classList.remove('show');
         });
 
         // Set minimum date to today
@@ -820,7 +1051,7 @@
         document.getElementById('date').min = today;
 
         // Auto-hide custom location field when a location is selected
-        document.getElementById('location').addEventListener('change', function() {
+        document.getElementById('startLocation').addEventListener('change', function() {
             if (this.value) {
                 document.getElementById('customLocation').value = '';
                 
@@ -857,7 +1088,7 @@
                 this.classList.add('selected');
                 
                 // Set the value in the dropdown
-                const dropdown = document.getElementById('location');
+                const dropdown = document.getElementById('startLocation');
                 dropdown.value = this.dataset.value;
                 
                 // Show sub-location container for specific locations
@@ -959,17 +1190,73 @@
         // Wire up popular location chips
         document.querySelectorAll('.location-item').forEach(chip => {
             chip.addEventListener('click', () => {
-                const mainSel = document.getElementById('location');
+                const mainSel = document.getElementById('startLocation');
                 mainSel.value = chip.dataset.value;
                 populateSubLocations(mainSel.value);
             }, { passive: true });
         });
 
         // Initialize sub-locations for any pre-selected location
-        const initialLocation = document.getElementById('location').value;
+        const initialLocation = document.getElementById('startLocation').value;
         if (initialLocation) {
             populateSubLocations(initialLocation);
         }
+
+        // Car selection with image display
+        document.getElementById('vehicle').addEventListener('change', function() {
+            const carImageContainer = document.getElementById('carImageContainer');
+            const carImage = document.getElementById('carImage');
+            
+            if (this.value && CAR_IMAGES[this.value]) {
+                carImage.src = CAR_IMAGES[this.value];
+                carImageContainer.classList.add('show');
+            } else {
+                carImageContainer.classList.remove('show');
+            }
+        });
+
+        // Event hours selection
+        document.querySelectorAll('.hour-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.hour-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Set hidden input value
+                document.getElementById('eventHours').value = this.dataset.hours;
+            });
+        });
+
+        // Driving options selection
+        document.querySelectorAll('.driving-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.driving-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Set hidden input value
+                const optionValue = this.dataset.option;
+                document.getElementById('drivingOption').value = optionValue;
+                
+                // Show/hide custom input
+                const customDrivingInput = document.getElementById('customDrivingInput');
+                if (optionValue === 'Other') {
+                    customDrivingInput.classList.add('show');
+                } else {
+                    customDrivingInput.classList.remove('show');
+                    document.getElementById('customDriving').value = '';
+                }
+            });
+        });
     </script>
 </body>
 </html>
+```
