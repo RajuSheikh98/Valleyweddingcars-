@@ -162,20 +162,6 @@
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        .custom-location-container {
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(255, 215, 0, 0.05);
-            border-radius: 10px;
-            border: 1px dashed #FFD700;
-        }
-
-        .custom-location-label {
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
         .btn {
             background: linear-gradient(45deg, #B8860B, #FFD700);
             color: #000;
@@ -269,6 +255,80 @@
             color: #000;
         }
 
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .btn-option {
+            flex: 1;
+            background: #1a1a1a;
+            color: #FFD700;
+            border: 2px solid #333;
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-option:hover {
+            background: #333;
+            border-color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .btn-option.active {
+            background: #FFD700;
+            color: #000;
+            border-color: #FFD700;
+        }
+
+        .decorations-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .decorations-container.visible {
+            display: block;
+        }
+
+        .decorations-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .decorations-btn {
+            flex: 1;
+            background: #1a1a1a;
+            color: #FFD700;
+            border: 2px solid #333;
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .decorations-btn:hover {
+            background: #333;
+            border-color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .decorations-btn.active {
+            background: #FFD700;
+            color: #000;
+            border-color: #FFD700;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -284,6 +344,15 @@
             
             .location-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn-option, .decorations-btn {
+                flex: none;
+                width: 100%;
             }
         }
     </style>
@@ -360,29 +429,47 @@
             </div>
 
             <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-car"></i> Service Type</h2>
+                
+                <div class="button-group">
+                    <button type="button" class="btn-option active" data-service="wedding">Wedding</button>
+                    <button type="button" class="btn-option" data-service="event">Event</button>
+                    <button type="button" class="btn-option" data-service="photoshoot">Photoshoot</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-paint-brush"></i> Decoration</h2>
+                <div id="decorationContainer" class="decorations-container">
+                    <div class="decorations-group">
+                        <button type="button" class="decorations-btn active" data-decor="artificial">Artificial Flowers</button>
+                        <button type="button" class="decorations-btn" data-decor="fresh">Fresh Flowers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
                 <h2 class="section-title"><i class="fas fa-car"></i> Vehicle Selection</h2>
                 
                 <div class="form-group">
                     <label for="vehicle">Select Your Wedding Car:</label>
                     <select id="vehicle" name="vehicle" required>
                         <option value="">Choose a vehicle...</option>
-                        <option value="Rolls Royce Phantom">Rolls Royce Phantom</option>
-                        <option value="Mercedes S-Class">Mercedes S-Class</option>
+                        <option value="BMW Convertible">BMW Convertible</option>
+                        <option value="Audi A6">Audi A6</option>
+                        <option value="Mercedes S Class">Mercedes S Class</option>
+                        <option value="Mercedes Maybach S500">Mercedes Maybach S500</option>
                         <option value="BMW 7 Series">BMW 7 Series</option>
-                        <option value="Audi A8">Audi A8</option>
-                        <option value="Lamborghini Urus">Lamborghini Urus</option>
-                        <option value="Range Rover">Range Rover</option>
-                        <option value="Cadillac Escalade">Cadillac Escalade</option>
-                        <option value="Maybach S-Class">Maybach S-Class</option>
-                        <option value="Bentley Continental">Bentley Continental</option>
-                        <option value="Ferrari 488">Ferrari 488</option>
-                        <option value="Tesla Model S">Tesla Model S</option>
-                        <option value="Other Luxury Car">Other Luxury Car</option>
+                        <option value="G Wagon">G Wagon</option>
+                        <option value="Mercedes CLA 200">Mercedes CLA 200</option>
+                        <option value="BMW 5 Series 1">BMW 5 Series 1</option>
+                        <option value="BMW 5 Series 2">BMW 5 Series 2</option>
+                        <option value="Range Rover Sport">Range Rover Sport</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="date">Wedding Date:</label>
+                    <label for="date">Date:</label>
                     <input type="date" id="date" name="date" required>
                 </div>
             </div>
@@ -432,6 +519,8 @@
             e.preventDefault();
             
             // Get form values
+            const serviceType = document.querySelector('.btn-option.active').dataset.service;
+            const decoration = document.querySelector('.decorations-btn.active')?.dataset.decor || 'none';
             const location = document.getElementById('location').value || document.querySelector('.location-item.selected')?.dataset.value;
             const customLocation = document.getElementById('customLocation').value;
             const vehicle = document.getElementById('vehicle').value;
@@ -454,6 +543,8 @@
             
             // Create WhatsApp message
             const whatsappMessage = `New Booking Request from ${name}:
+Service Type: ${serviceType}
+Decoration: ${decoration === 'none' ? 'None' : decoration}
 Location: ${location || customLocation}
 Vehicle: ${vehicle}
 Date: ${date}
@@ -478,6 +569,27 @@ Special Requests: ${message}`;
             document.querySelectorAll('.location-item').forEach(item => {
                 item.classList.remove('selected');
             });
+            
+            // Reset service selection
+            document.querySelectorAll('.btn-option').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.service === 'wedding') {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Reset decoration selection
+            document.querySelectorAll('.decorations-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.decor === 'artificial') {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Hide decorations container if not wedding
+            if (serviceType !== 'wedding') {
+                document.getElementById('decorationContainer').classList.remove('visible');
+            }
         });
 
         // Set minimum date to today
@@ -505,6 +617,40 @@ Special Requests: ${message}`;
                 // Set the value in the dropdown
                 const dropdown = document.getElementById('location');
                 dropdown.value = this.dataset.value;
+            });
+        });
+
+        // Handle service type selection
+        document.querySelectorAll('.btn-option').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.btn-option').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show/hide decoration options based on service type
+                const decorationContainer = document.getElementById('decorationContainer');
+                if (this.dataset.service === 'wedding') {
+                    decorationContainer.classList.add('visible');
+                } else {
+                    decorationContainer.classList.remove('visible');
+                }
+            });
+        });
+
+        // Handle decoration selection
+        document.querySelectorAll('.decorations-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all decoration buttons
+                document.querySelectorAll('.decorations-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
             });
         });
     </script>
