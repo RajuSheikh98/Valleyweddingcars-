@@ -1,3 +1,6 @@
+I'll create a complete solution that addresses all your requirements. Here's the final implementation:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,7 +170,7 @@
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        /* Segmented radio buttons (mobile-friendly) */
+        /* Segmented radio buttons (mobile-friendly) - FIXED WHITE BORDER ISSUE */
         .segmented{
             display:flex;
             gap:8px;
@@ -188,6 +191,9 @@
             -webkit-tap-highlight-color:transparent;
             background: #1a1a1a;
             transition: all 0.2s ease;
+            /* Remove any white borders */
+            border-color: #d4af37 !important;
+            box-shadow: none !important;
         }
         
         .seg-item input{ 
@@ -209,6 +215,12 @@
         /* iOS tap feedback improvement */
         .seg-item:active{ 
             transform: translateY(0.5px) 
+        }
+
+        /* Fix focus styles to remove white borders */
+        .seg-item:focus-within { 
+            outline: none; 
+            box-shadow: 0 0 0 2px rgba(212,175,55,0.4) !important; 
         }
 
         .decor-label{ 
@@ -323,6 +335,12 @@
             display: block;
         }
 
+        .sub-location-hint {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
         .booking-summary {
             background: rgba(255, 215, 0, 0.08);
             padding: 20px;
@@ -421,21 +439,6 @@
                     </select>
                 </div>
 
-                <div class="sub-location-container" id="subLocationContainer">
-                    <div class="form-group">
-                        <label for="subLocation">Sub-location (area inside selected place)</label>
-                        <select id="subLocation" name="subLocation" disabled>
-                            <option value="">Select sub-location</option>
-                        </select>
-                        <div class="hint">Choose a place first to see sub-locations.</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="customLocation">Or Enter Custom Location:</label>
-                    <input type="text" id="customLocation" name="customLocation" placeholder="Enter location if not listed above...">
-                </div>
-
                 <div class="kashmir-locations">
                     <h3 style="color: #FFD700; margin-bottom: 15px;">
                         <i class="fas fa-mountain"></i> Popular Kashmir Locations
@@ -454,6 +457,21 @@
                         <div class="location-item" data-value="Bandipora">Bandipora</div>
                         <div class="location-item" data-value="Kupwara">Kupwara</div>
                     </div>
+                </div>
+
+                <div class="sub-location-container" id="subLocationContainer">
+                    <div class="form-group">
+                        <label for="subLocation">Sub-location (area inside selected place)</label>
+                        <select id="subLocation" name="subLocation" disabled>
+                            <option value="">Select sub-location</option>
+                        </select>
+                        <div class="sub-location-hint">Choose a place first to see sub-locations.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="customLocation">Or Enter Custom Location:</label>
+                    <input type="text" id="customLocation" name="customLocation" placeholder="Enter location if not listed above...">
                 </div>
             </div>
 
@@ -606,7 +624,7 @@
     </div>
 
     <script>
-        // Sub-location data
+        // Sub-location data - EVERY LOCATION HAS SUB-LOCATIONS OR IS DISABLED
         const SUB_LOCATIONS = {
             'Srinagar': ['Rajbagh', 'Jawahar Nagar', 'Lal Chowk', 'Dalgate', 'Nishat', 'Shalimar', 'Hazratbal', 'Nowhatta', 'Bemina', 'Hyderpora', 'Chanapora', 'Sanat Nagar', 'Baghat'],
             'Leh': ['Leh City', 'Shanti Stupa', 'Hall of Fame', 'Nubra Valley', 'Thiksey Monastery', 'Diskit Monastery', 'Shey Palace', 'Alchi Monastery', 'Phyang Monastery', 'Lhalung Monastery'],
@@ -616,11 +634,16 @@
             'Sonamarg': ['Thajiwas Base', 'Main Market', 'Baltal Road', 'Betaab Valley', 'Aru Valley', 'Kokernag', 'Verinag', 'Qazigund'],
             'Nubra Valley': ['Nubra Valley', 'Hunder', 'Diskit', 'Sumur', 'Lamayuru', 'Hikkim', 'Turtuk', 'Chushul', 'Changthang', 'Ladakh'],
             'Anantnag': ['Lal Chowk Anantnag', 'Khanabal', 'Mattan', 'Pahalgam', 'Betaab Valley', 'Aru Valley', 'Kokernag', 'Verinag', 'Qazigund'],
-            'Budgam': ['Magam', 'Chadoora', 'Beerwah', 'Yusmarg', 'Gurez', 'Razdan Pass', 'Wular Lake'],
             'Baramulla': ['Main Town', 'Uri Road', 'Sopore Road', 'Gulmarg', 'Kongdori', 'Tanmarg', 'Sopore', 'Wagoora', 'Pattan'],
+            'Sopore': ['Main Town', 'Near Wular Lake', 'Gurez', 'Razdan Pass', 'Wular Lake'],
             'Bandipora': ['Main Town', 'Near Wular Lake', 'Gurez', 'Razdan Pass', 'Wular Lake'],
             'Kupwara': ['Main Town', 'Handwara Market', 'Lolab Valley', 'Keran', 'Machil', 'Bangus Valley'],
-            'Shopian': ['Main Town', 'Aglar Road', 'Peer Ki Gali', 'Hirpora']
+            'Udhampur': ['Main Town', 'Near Udhampur Lake', 'Gumma', 'Kishtwar Road'],
+            'Rajouri': ['Main Town', 'Banihal Road', 'Kathua Road'],
+            'Poonch': ['Main Town', 'Haveli', 'Kotli'],
+            'Doda': ['Main Town', 'Punch', 'Kishtwar'],
+            'Kishtwar': ['Main Town', 'Dharamshala', 'Chandigarh'],
+            'Ramban': ['Main Town', 'Chenab Valley', 'Bhaderwah']
         };
 
         // WhatsApp message builder function
@@ -919,10 +942,9 @@
         });
 
         // Populate sub-locations on page load if needed
-        function populateSubLocations() {
-            const place = document.getElementById('location').value;
-            const list = SUB_LOCATIONS[place] || [];
+        function populateSubLocations(mainValue) {
             const subSel = document.getElementById('subLocation');
+            const list = SUB_LOCATIONS[mainValue] || [];
             subSel.innerHTML = '<option value="">Select sub-location</option>';
             if (list.length === 0) {
                 subSel.disabled = true;
@@ -937,8 +959,21 @@
             subSel.disabled = false;
         }
 
-        // Add event listener for location change
-        document.getElementById('location').addEventListener('change', populateSubLocations, { passive: true });
+        // Wire up popular location chips
+        document.querySelectorAll('.location-item').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const mainSel = document.getElementById('location');
+                mainSel.value = chip.dataset.value;
+                populateSubLocations(mainSel.value);
+            }, { passive: true });
+        });
+
+        // Initialize sub-locations for any pre-selected location
+        const initialLocation = document.getElementById('location').value;
+        if (initialLocation) {
+            populateSubLocations(initialLocation);
+        }
     </script>
 </body>
 </html>
+```
