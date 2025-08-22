@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valley Wedding Cars - Luxury Fleet Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #FFD700;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(25, 25, 25, 0.9) 100%);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FFD700, #B8860B, #FFD700, #B8860B);
+            z-index: -1;
+            border-radius: 22px;
+            animation: borderAnimation 3s linear infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes borderAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 15px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><path d="M500 100L300 200L300 500L500 700L700 500L700 200Z" fill="%23d4af37"/><path d="M500 100L300 200L300 500L500 700L700 500L700 200Z" fill="%23d4af37"/><path d="M300 200L500 100L700 200L500 300L300 200Z" fill="%23000"/><path d="M300 500L500 700L700 500L500 300L300 500Z" fill="%23000"/><text x="200" y="250" font-size="80" font-weight="bold" fill="%23000">V</text><text x="450" y="250" font-size="80" font-weight="bold" fill="%23000">W</text><text x="700" y="250" font-size="80" font-weight="bold" fill="%23000">C</text><text x="200" y="300" font-size="40" fill="%23ffeb3b">VALLEY</text><text x="450" y="300" font-size="40" fill="%23ffeb3b">WEDDING</text><text x="700" y="300" font-size="40" fill="%23ffeb3b">CARS</text></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: block;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #FFD700, #B8860B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 3px solid #FFD700;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #FFD700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #B8860B;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #333;
+            background: #1a1a1a;
+            color: #FFD700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .custom-location-container {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 10px;
+            border: 1px dashed #FFD700;
+        }
+
+        .custom-location-label {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #B8860B, #FFD700);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .note {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 3px solid #FFD700;
+            font-size: 0.9rem;
+        }
+
+        .instagram-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #FFD700;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .instagram-link:hover {
+            background: #FFD700;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .instagram-link i {
+            margin-right: 8px;
+        }
+
+        .kashmir-locations {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #333;
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .location-item {
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .location-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .location-item.selected {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.3);
+            color: #000;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .quote {
+                font-size: 1rem;
+            }
+            
+            .location-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"></div>
+            <h1 class="title">Valley Wedding Cars</h1>
+            <p class="subtitle">Luxury Fleet Booking</p>
+        </div>
+
+        <div class="quote">
+            "Shaadi ka din khaas hota hai... aapki entry bhi waise hi honi chahiye."
+            <br>
+            <span style="font-size: 0.9rem; opacity: 0.7;">(Your wedding day is special—your entry should be unforgettable too.)</span>
+        </div>
+
+        <form id="bookingForm">
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Location Details</h2>
+                
+                <div class="form-group">
+                    <label for="location">Select Your Location in Kashmir:</label>
+                    <select id="location" name="location" required>
+                        <option value="">Choose a location...</option>
+                        <option value="Srinagar">Srinagar</option>
+                        <option value="Leh">Leh</option>
+                        <option value="Kargil">Kargil</option>
+                        <option value="Pahalgam">Pahalgam</option>
+                        <option value="Gulmarg">Gulmarg</option>
+                        <option value="Sonamarg">Sonamarg</option>
+                        <option value="Nubra Valley">Nubra Valley</option>
+                        <option value="Anantnag">Anantnag</option>
+                        <option value="Baramulla">Baramulla</option>
+                        <option value="Sopore">Sopore</option>
+                        <option value="Bandipora">Bandipora</option>
+                        <option value="Kupwara">Kupwara</option>
+                        <option value="Udhampur">Udhampur</option>
+                        <option value="Rajouri">Rajouri</option>
+                        <option value="Poonch">Poonch</option>
+                        <option value="Doda">Doda</option>
+                        <option value="Kishtwar">Kishtwar</option>
+                        <option value="Ramban">Ramban</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="customLocation">Or Enter Custom Location:</label>
+                    <input type="text" id="customLocation" name="customLocation" placeholder="Enter location if not listed above...">
+                </div>
+
+                <div class="kashmir-locations">
+                    <h3 style="color: #FFD700; margin-bottom: 15px;">
+                        <i class="fas fa-mountain"></i> Popular Kashmir Locations
+                    </h3>
+                    <div class="location-grid">
+                        <div class="location-item" data-value="Srinagar">Srinagar</div>
+                        <div class="location-item" data-value="Leh">Leh</div>
+                        <div class="location-item" data-value="Gulmarg">Gulmarg</div>
+                        <div class="location-item" data-value="Sonamarg">Sonamarg</div>
+                        <div class="location-item" data-value="Pahalgam">Pahalgam</div>
+                        <div class="location-item" data-value="Kargil">Kargil</div>
+                        <div class="location-item" data-value="Nubra Valley">Nubra Valley</div>
+                        <div class="location-item" data-value="Anantnag">Anantnag</div>
+                        <div class="location-item" data-value="Baramulla">Baramulla</div>
+                        <div class="location-item" data-value="Sopore">Sopore</div>
+                        <div class="location-item" data-value="Bandipora">Bandipora</div>
+                        <div class="location-item" data-value="Kupwara">Kupwara</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-car"></i> Vehicle Selection</h2>
+                
+                <div class="form-group">
+                    <label for="vehicle">Select Your Wedding Car:</label>
+                    <select id="vehicle" name="vehicle" required>
+                        <option value="">Choose a vehicle...</option>
+                        <option value="Rolls Royce Phantom">Rolls Royce Phantom</option>
+                        <option value="Mercedes S-Class">Mercedes S-Class</option>
+                        <option value="BMW 7 Series">BMW 7 Series</option>
+                        <option value="Audi A8">Audi A8</option>
+                        <option value="Lamborghini Urus">Lamborghini Urus</option>
+                        <option value="Range Rover">Range Rover</option>
+                        <option value="Cadillac Escalade">Cadillac Escalade</option>
+                        <option value="Maybach S-Class">Maybach S-Class</option>
+                        <option value="Bentley Continental">Bentley Continental</option>
+                        <option value="Ferrari 488">Ferrari 488</option>
+                        <option value="Tesla Model S">Tesla Model S</option>
+                        <option value="Other Luxury Car">Other Luxury Car</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Wedding Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-user"></i> Personal Information</h2>
+                
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Special Requests:</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Any special requirements or notes..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">
+                <i class="fas fa-bookmark"></i> BOOK YOUR WEDDING CAR
+            </button>
+
+            <div class="note">
+                <strong>Note:</strong> We only provide services throughout Kashmir and please contact us for customized pricing.
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="https://www.instagram.com/valleyweddingcars" target="_blank" class="instagram-link">
+                    <i class="fab fa-instagram"></i> Follow @valleyweddingcars on Instagram
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const location = document.getElementById('location').value || document.querySelector('.location-item.selected')?.dataset.value;
+            const customLocation = document.getElementById('customLocation').value;
+            const vehicle = document.getElementById('vehicle').value;
+            const date = document.getElementById('date').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Validate form
+            if (!location && !customLocation) {
+                alert('Please select a location or enter a custom location');
+                return;
+            }
+            
+            if (!vehicle || !date || !name || !email || !phone) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Create WhatsApp message
+            const whatsappMessage = `New Booking Request from ${name}:
+Location: ${location || customLocation}
+Vehicle: ${vehicle}
+Date: ${date}
+Phone: ${phone}
+Email: ${email}
+Special Requests: ${message}`;
+
+            // Encode the message and open WhatsApp
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/9205171767?text=${encodedMessage}`;
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // Show success message
+            alert(`Booking request sent successfully! We will contact you shortly.`);
+            
+            // Reset form
+            this.reset();
+            
+            // Clear selected location
+            document.querySelectorAll('.location-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+        });
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').min = today;
+
+        // Auto-hide custom location field when a location is selected
+        document.getElementById('location').addEventListener('change', function() {
+            if (this.value) {
+                document.getElementById('customLocation').value = '';
+            }
+        });
+
+        // Make location buttons selectable
+        document.querySelectorAll('.location-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove selected class from all items
+                document.querySelectorAll('.location-item').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked item
+                this.classList.add('selected');
+                
+                // Set the value in the dropdown
+                const dropdown = document.getElementById('location');
+                dropdown.value = this.dataset.value;
+            });
+        });
+    </script>
+</body>
+</html>
