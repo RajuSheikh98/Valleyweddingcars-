@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #000;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
             color: #FFD700;
             min-height: 100vh;
             padding: 20px;
@@ -74,6 +74,7 @@
             border: 2px solid #d4af37;
             box-shadow: 0 6px 18px rgba(212,175,55,0.15);
             overflow: hidden;
+            margin: 0 auto 15px;
         }
 
         /* Make the full logo visible and proportional */
@@ -119,6 +120,10 @@
 
         .form-section {
             margin-bottom: 30px;
+            background: rgba(255, 215, 0, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
         }
 
         .section-title {
@@ -182,6 +187,7 @@
             user-select:none;
             -webkit-tap-highlight-color:transparent;
             background: #1a1a1a;
+            transition: all 0.2s ease;
         }
         
         .seg-item input{ 
@@ -228,11 +234,12 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 7px 20px rgba(212, 175, 55, 0.4);
         }
 
         .btn:active {
@@ -273,7 +280,7 @@
         .kashmir-locations {
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-top: 20px;
             border: 1px solid #333;
         }
@@ -316,6 +323,36 @@
             display: block;
         }
 
+        .booking-summary {
+            background: rgba(255, 215, 0, 0.08);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            display: none;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .summary-value {
+            color: #FFFFFF;
+            text-align: right;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -331,6 +368,10 @@
             
             .location-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .form-section {
+                padding: 15px;
             }
         }
     </style>
@@ -522,6 +563,36 @@
                 <i class="fas fa-bookmark"></i> BOOK YOUR WEDDING CAR
             </button>
 
+            <div class="booking-summary" id="bookingSummary">
+                <h3 style="color: #FFD700; margin-bottom: 15px; text-align: center;">
+                    <i class="fas fa-check-circle"></i> Booking Summary
+                </h3>
+                <div class="summary-item">
+                    <span class="summary-label">Service:</span>
+                    <span class="summary-value" id="summaryService">Wedding</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Location:</span>
+                    <span class="summary-value" id="summaryLocation">Srinagar</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Vehicle:</span>
+                    <span class="summary-value" id="summaryVehicle">BMW Convertible</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Date:</span>
+                    <span class="summary-value" id="summaryDate">2025-01-01</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Name:</span>
+                    <span class="summary-value" id="summaryName">John Doe</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Phone:</span>
+                    <span class="summary-value" id="summaryPhone">+919205171767</span>
+                </div>
+            </div>
+
             <div class="note">
                 <strong>Note:</strong> We only provide services throughout Kashmir and please contact us for customized pricing.
             </div>
@@ -580,25 +651,31 @@
                 return;
             }
             
-            // Create WhatsApp message
+            // Create WhatsApp message with enhanced formatting
             const parts = [
-                'Valley Wedding Cars — New Booking',
-                `Name: ${name}`,
-                `Phone: +91${phone}`,
-                `Date: ${date}${document.getElementById('eventTime').value ? ' ' + document.getElementById('eventTime').value : ''}`,
-                `Service: ${serviceType}`,
-                `Car: ${vehicle}`,
-                `Location: ${location || customLocation}`,
-                subLocation ? `Sub-location: ${subLocation}` : null,
-                message ? `Special Requests: ${message}` : null
+                '╔══════════════════════════════════════╗',
+                '           🎉 VALLEY WEDDING CARS 🎉',
+                '╚══════════════════════════════════════╝',
+                '',
+                '📋 NEW BOOKING REQUEST',
+                '──────────────────────────────',
+                `👤 Name: ${name}`,
+                `📞 Phone: +91${phone}`,
+                `📧 Email: ${email}`,
+                `📅 Date: ${date}`,
+                `📍 Service: ${serviceType}`,
+                `🚗 Vehicle: ${vehicle}`,
+                `📍 Location: ${location || customLocation}`,
+                subLocation ? `🏢 Sub-location: ${subLocation}` : null,
+                wantDecoration === 'Yes' ? `🌸 Decoration: ${wantDecoration}` : null,
+                wantDecoration === 'Yes' && decoration ? `🌺 Decoration Type: ${decoration}` : null,
+                message ? `📝 Special Requests: ${message}` : null,
+                '',
+                '──────────────────────────────',
+                'Thank you for choosing Valley Wedding Cars!',
+                'We will contact you shortly to confirm your booking.',
+                '╚══════════════════════════════════════╝'
             ];
-            
-            if (serviceType === 'Wedding') {
-                parts.push(`Decoration: ${wantDecoration}`);
-                if (wantDecoration === 'Yes' && decoration) {
-                    parts.push(`Decoration Type: ${decoration}`);
-                }
-            }
             
             const messageText = parts.filter(Boolean).join('\n');
             
@@ -611,6 +688,15 @@
             
             // Show success message
             alert(`Booking request sent successfully! We will contact you shortly.`);
+            
+            // Display booking summary
+            document.getElementById('summaryService').textContent = serviceType;
+            document.getElementById('summaryLocation').textContent = location || customLocation;
+            document.getElementById('summaryVehicle').textContent = vehicle;
+            document.getElementById('summaryDate').textContent = date;
+            document.getElementById('summaryName').textContent = name;
+            document.getElementById('summaryPhone').textContent = `+91${phone}`;
+            document.getElementById('bookingSummary').style.display = 'block';
             
             // Reset form
             this.reset();
