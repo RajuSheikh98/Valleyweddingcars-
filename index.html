@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -286,58 +287,6 @@
             margin-right: 8px;
         }
 
-        .kashmir-locations {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            border: 1px solid #333;
-        }
-
-        .location-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .location-item {
-            padding: 10px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 5px;
-            text-align: center;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-
-        .location-item:hover {
-            background: rgba(255, 215, 0, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .location-item.selected {
-            border-color: #FFD700;
-            background: rgba(255, 215, 0, 0.3);
-            color: #000;
-        }
-
-        .sub-location-container {
-            margin-top: 15px;
-            display: none;
-        }
-
-        .sub-location-container.show {
-            display: block;
-        }
-
-        .sub-location-hint {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-top: 5px;
-        }
-
         .car-image-container {
             margin-top: 20px;
             text-align: center;
@@ -388,12 +337,27 @@
 
         .location-wrapper {
             display: flex;
+            flex-direction: column;
             gap: 15px;
             margin-bottom: 20px;
         }
 
-        .location-wrapper .form-group {
+        .location-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .location-field {
             flex: 1;
+            min-width: 120px;
+        }
+
+        .location-label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #FFD700;
         }
 
         .hours-container {
@@ -529,90 +493,85 @@
                 <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Location Details</h2>
                 
                 <div class="location-wrapper">
-                    <div class="form-group">
-                        <label for="startLocation">Event Start Point:</label>
-                        <select id="startLocation" name="startLocation" required>
-                            <option value="">Choose a location...</option>
-                            <option value="Srinagar">Srinagar</option>
-                            <option value="Leh">Leh</option>
-                            <option value="Kargil">Kargil</option>
-                            <option value="Pahalgam">Pahalgam</option>
-                            <option value="Gulmarg">Gulmarg</option>
-                            <option value="Sonamarg">Sonamarg</option>
-                            <option value="Nubra Valley">Nubra Valley</option>
-                            <option value="Anantnag">Anantnag</option>
-                            <option value="Baramulla">Baramulla</option>
-                            <option value="Sopore">Sopore</option>
-                            <option value="Bandipora">Bandipora</option>
-                            <option value="Kupwara">Kupwara</option>
-                            <option value="Udhampur">Udhampur</option>
-                            <option value="Rajouri">Rajouri</option>
-                            <option value="Poonch">Poonch</option>
-                            <option value="Doda">Doda</option>
-                            <option value="Kishtwar">Kishtwar</option>
-                            <option value="Ramban">Ramban</option>
-                        </select>
+                    <div class="location-group">
+                        <div class="location-field">
+                            <label class="location-label">EVENT START LOCATION</label>
+                            <select id="startMainLocation" name="startMainLocation" required>
+                                <option value="">MAIN LOCATION</option>
+                                <option value="Srinagar">Srinagar</option>
+                                <option value="Leh">Leh</option>
+                                <option value="Kargil">Kargil</option>
+                                <option value="Pahalgam">Pahalgam</option>
+                                <option value="Gulmarg">Gulmarg</option>
+                                <option value="Sonamarg">Sonamarg</option>
+                                <option value="Nubra Valley">Nubra Valley</option>
+                                <option value="Anantnag">Anantnag</option>
+                                <option value="Baramulla">Baramulla</option>
+                                <option value="Sopore">Sopore</option>
+                                <option value="Bandipora">Bandipora</option>
+                                <option value="Kupwara">Kupwara</option>
+                                <option value="Udhampur">Udhampur</option>
+                                <option value="Rajouri">Rajouri</option>
+                                <option value="Poonch">Poonch</option>
+                                <option value="Doda">Doda</option>
+                                <option value="Kishtwar">Kishtwar</option>
+                                <option value="Ramban">Ramban</option>
+                            </select>
+                        </div>
+                        
+                        <div class="location-field">
+                            <label class="location-label">SUB LOCATION</label>
+                            <select id="startSubLocation" name="startSubLocation">
+                                <option value="">SUB LOCATION</option>
+                            </select>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="endLocation">Event End Point:</label>
-                        <select id="endLocation" name="endLocation" required>
-                            <option value="">Choose a location...</option>
-                            <option value="Srinagar">Srinagar</option>
-                            <option value="Leh">Leh</option>
-                            <option value="Kargil">Kargil</option>
-                            <option value="Pahalgam">Pahalgam</option>
-                            <option value="Gulmarg">Gulmarg</option>
-                            <option value="Sonamarg">Sonamarg</option>
-                            <option value="Nubra Valley">Nubra Valley</option>
-                            <option value="Anantnag">Anantnag</option>
-                            <option value="Baramulla">Baramulla</option>
-                            <option value="Sopore">Sopore</option>
-                            <option value="Bandipora">Bandipora</option>
-                            <option value="Kupwara">Kupwara</option>
-                            <option value="Udhampur">Udhampur</option>
-                            <option value="Rajouri">Rajouri</option>
-                            <option value="Poonch">Poonch</option>
-                            <option value="Doda">Doda</option>
-                            <option value="Kishtwar">Kishtwar</option>
-                            <option value="Ramban">Ramban</option>
-                        </select>
+                    <div class="location-field">
+                        <label class="location-label">DETAILED ADDRESS</label>
+                        <input type="text" id="startDetailedAddress" name="startDetailedAddress" placeholder="Enter detailed address...">
                     </div>
                 </div>
 
-                <div class="kashmir-locations">
-                    <h3 style="color: #FFD700; margin-bottom: 15px;">
-                        <i class="fas fa-mountain"></i> Popular Kashmir Locations
-                    </h3>
-                    <div class="location-grid">
-                        <div class="location-item" data-value="Srinagar">Srinagar</div>
-                        <div class="location-item" data-value="Leh">Leh</div>
-                        <div class="location-item" data-value="Gulmarg">Gulmarg</div>
-                        <div class="location-item" data-value="Sonamarg">Sonamarg</div>
-                        <div class="location-item" data-value="Pahalgam">Pahalgam</div>
-                        <div class="location-item" data-value="Kargil">Kargil</div>
-                        <div class="location-item" data-value="Nubra Valley">Nubra Valley</div>
-                        <div class="location-item" data-value="Anantnag">Anantnag</div>
-                        <div class="location-item" data-value="Baramulla">Baramulla</div>
-                        <div class="location-item" data-value="Sopore">Sopore</div>
-                        <div class="location-item" data-value="Bandipora">Bandipora</div>
-                        <div class="location-item" data-value="Kupwara">Kupwara</div>
+                <div class="location-wrapper">
+                    <div class="location-group">
+                        <div class="location-field">
+                            <label class="location-label">EVENT END LOCATION</label>
+                            <select id="endMainLocation" name="endMainLocation" required>
+                                <option value="">MAIN LOCATION</option>
+                                <option value="Srinagar">Srinagar</option>
+                                <option value="Leh">Leh</option>
+                                <option value="Kargil">Kargil</option>
+                                <option value="Pahalgam">Pahalgam</option>
+                                <option value="Gulmarg">Gulmarg</option>
+                                <option value="Sonamarg">Sonamarg</option>
+                                <option value="Nubra Valley">Nubra Valley</option>
+                                <option value="Anantnag">Anantnag</option>
+                                <option value="Baramulla">Baramulla</option>
+                                <option value="Sopore">Sopore</option>
+                                <option value="Bandipora">Bandipora</option>
+                                <option value="Kupwara">Kupwara</option>
+                                <option value="Udhampur">Udhampur</option>
+                                <option value="Rajouri">Rajouri</option>
+                                <option value="Poonch">Poonch</option>
+                                <option value="Doda">Doda</option>
+                                <option value="Kishtwar">Kishtwar</option>
+                                <option value="Ramban">Ramban</option>
+                            </select>
+                        </div>
+                        
+                        <div class="location-field">
+                            <label class="location-label">SUB LOCATION</label>
+                            <select id="endSubLocation" name="endSubLocation">
+                                <option value="">SUB LOCATION</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-
-                <div class="sub-location-container" id="subLocationContainer">
-                    <div class="form-group">
-                        <label for="subLocation">Sub-location (area inside selected place)</label>
-                        <select id="subLocation" name="subLocation" disabled>
-                            <option value="">Select sub-location</option>
-                        </select>
-                        <div class="sub-location-hint">Choose a place first to see sub-locations.</div>
+                    
+                    <div class="location-field">
+                        <label class="location-label">DETAILED ADDRESS</label>
+                        <input type="text" id="endDetailedAddress" name="endDetailedAddress" placeholder="Enter detailed address...">
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="customLocation">Or Enter Custom Location:</label>
-                    <input type="text" id="customLocation" name="customLocation" placeholder="Enter location if not listed above...">
                 </div>
             </div>
 
@@ -858,10 +817,12 @@
             const eventDate = getVal('date');
             const service = getVal('serviceType');
             const vehicle = getVal('vehicle');
-            const startLocation = getVal('startLocation');
-            const endLocation = getVal('endLocation');
-            const subLocation = getVal('subLocation');
-            const customLocation = getVal('customLocation');
+            const startMainLocation = getVal('startMainLocation');
+            const startSubLocation = getVal('startSubLocation');
+            const startDetailedAddress = getVal('startDetailedAddress');
+            const endMainLocation = getVal('endMainLocation');
+            const endSubLocation = getVal('endSubLocation');
+            const endDetailedAddress = getVal('endDetailedAddress');
             const eventHours = getVal('eventHours');
             const drivingOption = getVal('drivingOption');
             const customDriving = getVal('customDriving');
@@ -872,14 +833,23 @@
             const decorationType = getVal('decoration');
             
             // Compose Location line with precedence: custom > location (+ sub)
-            const locationParts = [];
-            if (customLocation) {
-                locationParts.push(customLocation);
+            const startLocationParts = [];
+            if (startDetailedAddress) {
+                startLocationParts.push(startDetailedAddress);
             } else {
-                if (startLocation) locationParts.push(startLocation);
-                if (subLocation) locationParts.push(subLocation);
+                if (startMainLocation) startLocationParts.push(startMainLocation);
+                if (startSubLocation) startLocationParts.push(startSubLocation);
             }
-            const locationStr = locationParts.join(' — ');
+            const startLocationStr = startLocationParts.join(' — ');
+            
+            const endLocationParts = [];
+            if (endDetailedAddress) {
+                endLocationParts.push(endDetailedAddress);
+            } else {
+                if (endMainLocation) endLocationParts.push(endMainLocation);
+                if (endSubLocation) endLocationParts.push(endSubLocation);
+            }
+            const endLocationStr = endLocationParts.join(' — ');
             
             // Sections
             const header = 'Valley Wedding Cars — Booking Request';
@@ -896,8 +866,8 @@
                 `- Date: ${eventDate}`,
                 `- Service: ${service}`,
                 `- Car: ${vehicle}`,
-                `- Start Location: ${startLocation || locationStr}`,
-                `- End Location: ${endLocation}`,
+                `- Start Location: ${startLocationStr}`,
+                `- End Location: ${endLocationStr}`,
                 `- Event Hours: ${eventHours || 'Not specified'}`,
                 `- Driving Option: ${drivingOption || 'Not specified'}`,
                 message ? `- Special Requests: ${message}` : null
@@ -946,12 +916,12 @@
                 alert('Please select a car.');
                 return;
             }
-            if (!document.getElementById('startLocation')?.value.trim() && !document.getElementById('customLocation')?.value.trim()) {
-                alert('Please choose a start location or enter an Other Location.');
+            if (!document.getElementById('startMainLocation')?.value.trim()) {
+                alert('Please select a start main location.');
                 return;
             }
-            if (!document.getElementById('endLocation')?.value.trim()) {
-                alert('Please choose an end location.');
+            if (!document.getElementById('endMainLocation')?.value.trim()) {
+                alert('Please select an end main location.');
                 return;
             }
             
@@ -970,10 +940,12 @@
             const serviceType = document.querySelector('input[name="serviceTypeRadio"]:checked')?.value || 'Wedding';
             const wantDecoration = document.querySelector('input[name="wantDecorationRadio"]:checked')?.value || 'No';
             const decoration = document.querySelector('input[name="decorationTypeRadio"]:checked')?.value || '';
-            const startLocation = document.getElementById('startLocation').value;
-            const endLocation = document.getElementById('endLocation').value;
-            const subLocation = document.getElementById('subLocation').value;
-            const customLocation = document.getElementById('customLocation').value;
+            const startMainLocation = document.getElementById('startMainLocation').value;
+            const startSubLocation = document.getElementById('startSubLocation').value;
+            const startDetailedAddress = document.getElementById('startDetailedAddress').value;
+            const endMainLocation = document.getElementById('endMainLocation').value;
+            const endSubLocation = document.getElementById('endSubLocation').value;
+            const endDetailedAddress = document.getElementById('endDetailedAddress').value;
             const vehicle = document.getElementById('vehicle').value;
             const date = document.getElementById('date').value;
             const eventHours = document.getElementById('eventHours').value;
@@ -985,13 +957,13 @@
             const message = document.getElementById('message').value;
             
             // Validate form
-            if (!startLocation && !customLocation) {
-                alert('Please select a start location or enter a custom location');
+            if (!startMainLocation) {
+                alert('Please select a start main location.');
                 return;
             }
             
-            if (!endLocation) {
-                alert('Please select an end location');
+            if (!endMainLocation) {
+                alert('Please select an end main location.');
                 return;
             }
             
@@ -1003,7 +975,7 @@
             // Display booking summary
             document.getElementById('summaryEnquiry').textContent = enquiryType;
             document.getElementById('summaryService').textContent = serviceType;
-            document.getElementById('summaryLocation').textContent = startLocation || customLocation;
+            document.getElementById('summaryLocation').textContent = startMainLocation;
             document.getElementById('summaryVehicle').textContent = vehicle;
             document.getElementById('summaryDate').textContent = date;
             document.getElementById('summaryName').textContent = name;
@@ -1049,157 +1021,32 @@
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('date').min = today;
 
-        // Auto-hide custom location field when a location is selected
-        document.getElementById('startLocation').addEventListener('change', function() {
-            if (this.value) {
-                document.getElementById('customLocation').value = '';
-                
-                // Show sub-location container for specific locations
-                const subLocationContainer = document.getElementById('subLocationContainer');
-                if (SUB_LOCATIONS[this.value]) {
-                    subLocationContainer.classList.add('show');
-                    
-                    // Populate sub-locations
-                    const subLocationSelect = document.getElementById('subLocation');
-                    subLocationSelect.innerHTML = '<option value="">Select sub-location</option>';
-                    
-                    SUB_LOCATIONS[this.value].forEach(location => {
-                        const option = document.createElement('option');
-                        option.value = location;
-                        option.textContent = location;
-                        subLocationSelect.appendChild(option);
-                    });
-                } else {
-                    subLocationContainer.classList.remove('show');
-                }
-            }
-        });
-
-        // Make location buttons selectable
-        document.querySelectorAll('.location-item').forEach(item => {
-            item.addEventListener('click', function() {
-                // Remove selected class from all items
-                document.querySelectorAll('.location-item').forEach(el => {
-                    el.classList.remove('selected');
-                });
-                
-                // Add selected class to clicked item
-                this.classList.add('selected');
-                
-                // Set the value in the dropdown
-                const dropdown = document.getElementById('startLocation');
-                dropdown.value = this.dataset.value;
-                
-                // Show sub-location container for specific locations
-                const subLocationContainer = document.getElementById('subLocationContainer');
-                if (SUB_LOCATIONS[this.dataset.value]) {
-                    subLocationContainer.classList.add('show');
-                    
-                    // Populate sub-locations
-                    const subLocationSelect = document.getElementById('subLocation');
-                    subLocationSelect.innerHTML = '<option value="">Select sub-location</option>';
-                    
-                    SUB_LOCATIONS[this.dataset.value].forEach(location => {
-                        const option = document.createElement('option');
-                        option.value = location;
-                        option.textContent = location;
-                        subLocationSelect.appendChild(option);
-                    });
-                } else {
-                    subLocationContainer.classList.remove('show');
-                }
-            });
-        });
-
-        // Service selection logic
-        const serviceHidden = document.getElementById('serviceType');
-        const decorBlock = document.getElementById('decorBlock');
-        const decorTypeRow = document.getElementById('decorTypeRow');
-        const wantDecorHidden = document.getElementById('wantDecoration');
-        const decorHidden = document.getElementById('decoration');
-
-        function updateDecorVisibility() {
-            const serviceVal = document.querySelector('input[name="serviceTypeRadio"]:checked')?.value || 'Wedding';
-            serviceHidden.value = serviceVal;
-            const showDecor = serviceVal === 'Wedding';
-            decorBlock.style.display = showDecor ? 'block' : 'none';
-            if (!showDecor) {
-                // Reset decoration state
-                document.querySelector('input[name="wantDecorationRadio"][value="No"]').checked = true;
-                wantDecorHidden.value = 'No';
-                decorTypeRow.hidden = true;
-                decorHidden.value = '';
-                const checkedType = document.querySelector('input[name="decorationTypeRadio"]:checked');
-                if (checkedType) checkedType.checked = false;
-            }
-        }
-
-        // Init service
-        document.querySelectorAll('input[name="serviceTypeRadio"]').forEach(r => {
-            r.addEventListener('change', updateDecorVisibility, { passive: true });
-            r.addEventListener('input', updateDecorVisibility, { passive: true });
-        });
-        updateDecorVisibility();
-
-        // Want decoration Yes/No
-        function updateWantDecor() {
-            const val = document.querySelector('input[name="wantDecorationRadio"]:checked')?.value || 'No';
-            wantDecorHidden.value = val;
-            if (val === 'Yes') {
-                decorTypeRow.hidden = false;
-            } else {
-                decorTypeRow.hidden = true;
-                decorHidden.value = '';
-                const checkedType = document.querySelector('input[name="decorationTypeRadio"]:checked');
-                if (checkedType) checkedType.checked = false;
-            }
-        }
-
-        document.querySelectorAll('input[name="wantDecorationRadio"]').forEach(r => {
-            r.addEventListener('change', updateWantDecor, { passive: true });
-            r.addEventListener('input', updateWantDecor, { passive: true });
-        });
-        updateWantDecor();
-
-        // Decoration type
-        document.querySelectorAll('input[name="decorationTypeRadio"]').forEach(r => {
-            r.addEventListener('change', () => {
-                decorHidden.value = r.checked ? r.value : '';
-            }, { passive: true });
-        });
-
-        // Populate sub-locations on page load if needed
-        function populateSubLocations(mainValue) {
-            const subSel = document.getElementById('subLocation');
+        // Populate sub-locations when main location changes
+        function populateSubLocations(mainValue, selectorId) {
+            const subSel = document.getElementById(selectorId);
             const list = SUB_LOCATIONS[mainValue] || [];
-            subSel.innerHTML = '<option value="">Select sub-location</option>';
+            subSel.innerHTML = '<option value="">SUB LOCATION</option>';
             if (list.length === 0) {
                 subSel.disabled = true;
                 return;
             }
             list.forEach(name => {
-                const opt = document.createElement('option');
-                opt.value = name;
-                opt.textContent = name;
-                subSel.appendChild(opt);
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                subSel.appendChild(option);
             });
             subSel.disabled = false;
         }
 
-        // Wire up popular location chips
-        document.querySelectorAll('.location-item').forEach(chip => {
-            chip.addEventListener('click', () => {
-                const mainSel = document.getElementById('startLocation');
-                mainSel.value = chip.dataset.value;
-                populateSubLocations(mainSel.value);
-            }, { passive: true });
+        // Wire up main location changes for both start and end locations
+        document.getElementById('startMainLocation').addEventListener('change', function() {
+            populateSubLocations(this.value, 'startSubLocation');
         });
 
-        // Initialize sub-locations for any pre-selected location
-        const initialLocation = document.getElementById('startLocation').value;
-        if (initialLocation) {
-            populateSubLocations(initialLocation);
-        }
+        document.getElementById('endMainLocation').addEventListener('change', function() {
+            populateSubLocations(this.value, 'endSubLocation');
+        });
 
         // Car selection with image display
         document.getElementById('vehicle').addEventListener('change', function() {
@@ -1258,3 +1105,4 @@
     </script>
 </body>
 </html>
+```
